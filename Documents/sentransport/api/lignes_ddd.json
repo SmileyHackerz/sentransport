@@ -1,0 +1,40 @@
+[
+  {
+    "id": 1,
+    "numero": "1",
+    "depart": "Parcelles Assainies",
+    "arrivee": "Plateau",
+    "arrets": 14,
+    "listeArrets": [
+      "Parcelles U14",
+      "Parcelles U10",
+      "Cambérène",
+      "Grand Médine",
+      "Liberté 6",
+      "Colobane",
+      "Plateau"
+    ]
+  },
+  {
+    "id": 2,
+    "numero": "34",
+    "depart": "Keur Massar",
+    "arrivee": "Place Obélisque",
+    "arrets": 18,
+    "listeArrets": [
+      "Keur Massar",
+      "Rufisque",
+      "Pikine",
+      "Colobane",
+      "Obélisque"
+    ]
+  },
+  {
+    "id": 3,
+    "numero": "46",
+    "depart": "Guédiawaye",
+    "arrivee": "Université UCAD",
+    "arrets": 12,
+    "listeArrets": ["Guédiawaye", "Golf", "Patte d'Oie", "Fann", "UCAD"]
+  }
+]
