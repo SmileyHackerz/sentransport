@@ -5,13 +5,18 @@ import Recherche from "./Recherche";
 import LigneBus from "./LigneBus";
 import DetailLigne from "./DetailLigne";
 import Footer from "./Footer";
+import Carte from "./Carte";
 function App() {
   const [lignes, setLignes] = useState([]);
   const [chargement, setChargement] = useState(true);
   const [erreur, setErreur] = useState(null);
   const [recherche, setRecherche] = useState("");
   const [ligneSelectionnee, setLigneSelectionnee] = useState(null);
-  useEffect(() => {
+  // 1. Crée la fonction de chargement (avant le useEffect)
+  const chargerLignes = () => {
+    setChargement(true); // On remet l'état de chargement à true
+    setErreur(null); // On réinitialise l'erreur
+
     fetch("http://localhost:5000/lignes")
       .then((response) => {
         if (!response.ok) {
@@ -27,6 +32,11 @@ function App() {
         setErreur(error.message);
         setChargement(false);
       });
+  };
+
+  // 2. Le useEffect ne fait plus qu'appeler cette fonction au démarrage
+  useEffect(() => {
+    chargerLignes();
   }, []);
   const lignesFiltrees = lignes.filter(
     (l) =>
@@ -35,10 +45,27 @@ function App() {
       l.numero.includes(recherche),
   );
   function handleClickLigne(ligne) {
+    // Si on clique sur la ligne déjà sélectionnée, on la referme
     if (ligneSelectionnee && ligneSelectionnee.id === ligne.id) {
       setLigneSelectionnee(null);
     } else {
-      setLigneSelectionnee(ligne);
+      // EXERCICE 3 : On interroge l'API Flask pour récupérer les détails
+      fetch(`http://localhost:5000/lignes/${ligne.id}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Erreur lors de la récupération des détails");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // 'data' est le JSON de la ligne renvoyé par ton backend Flask !
+          setLigneSelectionnee(data);
+        })
+        .catch((error) => {
+          console.error("Erreur Exercice 3 :", error);
+          // Optionnel : En cas de coupure réseau, on utilise la ligne locale en secours
+          setLigneSelectionnee(ligne);
+        });
     }
   }
   if (chargement) {
@@ -70,6 +97,10 @@ function App() {
       <Header />
       <main className="contenu">
         <Recherche valeur={recherche} onChange={setRecherche} />
+        {/* Nouveau bouton de rechargement */}
+        <button onClick={chargerLignes} style={{ marginBottom: "20px" }}>
+          Recharger les données
+        </button>
         <p className="resultat-recherche">
           {lignesFiltrees.length} ligne
           {lignesFiltrees.length > 1 ? "s" : ""} trouvee
@@ -89,6 +120,7 @@ function App() {
           />
         ))}
         {ligneSelectionnee && <DetailLigne ligne={ligneSelectionnee} />}
+        <Carte />
       </main>
       <Footer />
     </div>

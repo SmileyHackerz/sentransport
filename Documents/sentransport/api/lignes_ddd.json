@@ -36,5 +36,21 @@
     "arrivee": "Université UCAD",
     "arrets": 12,
     "listeArrets": ["Guédiawaye", "Golf", "Patte d'Oie", "Fann", "UCAD"]
+  },
+  {
+    "id": 7,
+    "numero": "7",
+    "depart": "Ouakam",
+    "arrivee": "Plateau",
+    "arrets": 3,
+    "listeArrets": ["Ouakam", "Mermoz", "Plateau"]
+  },
+  {
+    "id": 8,
+    "numero": "8",
+    "depart": "Almadies",
+    "arrivee": "Aéroport",
+    "arrets": 3,
+    "listeArrets": ["Almadies", "Ngor", "Yoff"]
   }
 ]
